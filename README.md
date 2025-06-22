@@ -1,20 +1,6 @@
 # Polymarket Price API
 
-**tldr**
-
-* single-endpoint microservice (`/price?market=<slug|url>`) exposing the midpoint ( best-bid + best-ask )/2 for a Polymarket *YES* token
-* built on **fastapi** + **httpx** (async)
-* request flow
-
-  1. **slugify** input (url or slug) → canonical slug
-  2. **check\_market** → local `db/markets.json` cache for `{YES, NO}` token-ids
-  3. cache miss → **get\_market\_tokens** hits *gamma* API, stores tokens back to cache
-  4. **get\_market\_price** hits *clob* `/price` for bid & ask → returns midpoint
-* returns `{ "price": <float 0–1> }` or 5xx on upstream failure
-* thin file-based cache (easy to swap for redis/sqlite)
-* lightweight test in `tests/` does gamma+clob round-trip sanity check
-* install -> `pip install -r requirements.txt`; run -> `uvicorn app:app --reload`
-
+## dir
 ```plaintext
 
 polymarket_price_api/
@@ -65,5 +51,19 @@ user ──> fastapi /price?market=<slug|url>
           v
       return {"price": avg}
 ```
+## 
+**tldr**
 
+* single-endpoint microservice (`/price?market=<slug|url>`) exposing the midpoint ( best-bid + best-ask )/2 for a Polymarket *YES* token
+* built on **fastapi** + **httpx** (async)
+* request flow
+
+  1. **slugify** input (url or slug) → canonical slug
+  2. **check\_market** → local `db/markets.json` cache for `{YES, NO}` token-ids
+  3. cache miss → **get\_market\_tokens** hits *gamma* API, stores tokens back to cache
+  4. **get\_market\_price** hits *clob* `/price` for bid & ask → returns midpoint
+* returns `{ "price": <float 0–1> }` or 5xx on upstream failure
+* thin file-based cache (easy to swap for redis/sqlite)
+* lightweight test in `tests/` does gamma+clob round-trip sanity check
+* install -> `pip install -r requirements.txt`; run -> `uvicorn app:app --reload`
 
