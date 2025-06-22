@@ -1,6 +1,6 @@
 # Polymarket Price API
 
-get price (probability) of a event
+get price (probability) of an event
 
 - request: with market url
 - response: price  
