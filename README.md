@@ -1,5 +1,10 @@
 # Polymarket Price API
 
+get price (probability) of a event
+
+- request: with market url
+- response: price  
+
 ## dir
 ```plaintext
 
